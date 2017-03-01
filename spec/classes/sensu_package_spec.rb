@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'sensu' do
-  let(:facts) { { :fqdn => 'testhost.domain.com', :osfamily => 'RedHat' } }
+  let(:facts) { { :fqdn => 'testhost.domain.com', :osfamily => 'RedHat', :operatingsystemmajrelease => 7 } }
   directories = [ '/etc/sensu/conf.d', '/etc/sensu/conf.d/handlers', '/etc/sensu/conf.d/checks',
         '/etc/sensu/handlers', '/etc/sensu/extensions', '/etc/sensu/mutators',
         '/etc/sensu/extensions/handlers', '/etc/sensu/plugins' ]
@@ -34,7 +34,7 @@ describe 'sensu' do
       } }
 
       it { should contain_package('sensu').with(
-        :ensure => '0.9.10'
+        :ensure => '0.9.10.el7'
       ) }
 
       it { should contain_package('sensu-plugin').with(
@@ -60,7 +60,7 @@ describe 'sensu' do
       it { should contain_file('/etc/default/sensu').with(:content => /RUBYOPT="a"/) }
       it { should contain_file('/etc/default/sensu').with(:content => /GEM_PATH="\/foo"/) }
       it { should contain_file('/etc/default/sensu').with(:content => /CLIENT_DEREGISTER_ON_STOP=true/) }
-      it { should contain_file('/etc/default/sensu').with(:content => /CLIENT_DEREGISTER_HANDLER="example"/) } 
+      it { should contain_file('/etc/default/sensu').with(:content => /CLIENT_DEREGISTER_HANDLER="example"/) }
     end
 
     context 'repos' do
